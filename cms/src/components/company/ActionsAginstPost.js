@@ -37,7 +37,7 @@ export default function ActionsAginstPost() {
     }
     useEffect(() => {
         getResponseAgainstJobs()
-    })
+    }, [])
     const delSpecificCandidate = (id) => {
         setGetResponseFromServer(true)
         axios.get(`${AppSettings.SERVER_URL_PORT}/candidate/delete/${id}`)

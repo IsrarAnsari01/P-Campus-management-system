@@ -10,5 +10,5 @@ router.post("/apply/:id", container.applyForJob)
 router.post("/pull/:id", container.cancelAppliedJob)
 router.post("/update/:id", container.updateUserInfo)
 router.get("/:id", container.deleteSpecficStudent)
-
+router.get("/remove-deleted-job-Information/:id", container.removeDeletedJobInformation)
 module.exports = router;

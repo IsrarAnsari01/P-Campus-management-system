@@ -1,0 +1,56 @@
+/* user signin form */
+.display-gernal-err-for-student-signin-form {
+    display: none;
+}
+.display-pwd-err {
+    display: none;
+}
+.cardTitleForSignInIUser {
+    font-size: 40px;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: #8e36e0;
+
+}
+/* user login form */
+.display-gernal-err-for-student-login-form {
+    display: none;
+}
+.display-specific-err-for-student-login-form {
+    display: none;
+}
+.forStudentLoginForm {
+    box-shadow: 15px 10px 15px rgb(224, 220, 220);
+}
+/* basic form box */
+.forForm {
+    box-shadow: 10px 2px 10px rgb(224, 220, 220);
+}
+/* Company Sigin form */
+.display-gernal-err-for-company-signin-form {
+    display: none;
+}
+.display-specific-err-for-company-signin-form  {
+    display: none;
+}
+/* company login form */
+.display-gernal-err-for-company-login-form {
+    display: none;
+}
+.display-specific-err-for-company-login-form {
+    display: none;
+}
+/* student update form */
+.display-gernal-err-for-student-update-form {
+    display: none;
+}
+.display-specific-err-for-student-update-form {
+    display: none;
+}
+/* company job form */
+.display-gernal-err-for-company-job-form {
+    display: none;
+}
+.display-specific-err-for-company-job-form {
+    display: none;
+}

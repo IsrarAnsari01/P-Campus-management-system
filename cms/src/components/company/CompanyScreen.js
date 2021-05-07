@@ -13,7 +13,7 @@ export default function CompanyScreen() {
     const getCompinesFromServer = () => {
         axios.get(`${AppSettings.SERVER_URL_PORT}/company`)
             .then(success => {
-                setcompines(success.data.compines.reverse().slice(0,6))
+                setcompines(success.data.compines.reverse().slice(0, 6))
             })
             .catch(err => {
                 console.log("Something went wrong", err)
@@ -49,12 +49,21 @@ export default function CompanyScreen() {
                             </Card.Title>
                         </Card.Header>
                         <Card.Body>
-                            {compines.map(company => <>
+                            {compines && compines.length > 0 ? compines.map(company => <>
                                 <Card.Title> {company.companyName}</Card.Title>
                                 <Card.Text className='pl-5'> Location | {company.companyCity} , {company.companyContry} <br />
                                     Added in our website | {company.addedOn} <br /> Owner | {company.companyOwnerName} <br /> Company Email | {company.companyEmail}  <br /> Cetagory | {company.companyCetagory}</Card.Text>
                                 <hr />
-                            </>)}
+                            </>) : <Card>
+                                <Card.Header>
+                                    <Card.Title className='text-danger text-center m-4'>
+                                        Opps!
+                                    </Card.Title>
+                                    <Card.Body>
+                                        Currently No company registered with us Stay connected compines join with us very soon
+                                    </Card.Body>
+                                </Card.Header>
+                            </Card>}
                         </Card.Body>
                     </Card>
                 </Col>
@@ -74,7 +83,7 @@ export default function CompanyScreen() {
                             </Card.Title>
                         </Card.Header>
                         <Card.Body className='mt-4'>
-                        <ComapnySignUpForm />
+                            <ComapnySignUpForm />
                         </Card.Body>
                         <Card.Footer className='text-center'>
                             <Link to='/companyLogIn'> If you alerady have an account lets LogIn!</Link> | <Link to='/companySignIn'> Sign Up</Link>

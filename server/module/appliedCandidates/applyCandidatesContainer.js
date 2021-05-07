@@ -31,6 +31,15 @@ module.exports.deleteSpecficCandidate = (req,res) => {
         res.send({status: true, message: "Error in Deleting Candidate"})
     })
 }
+module.exports.deleteSpecficJobCandidates = (req,res) => {
+    const jobId = req.params.id
+    candidateModel.deleteMultipleJobCandidateWithQuery(jobId)
+    .then(succ => {
+        res.send({status: true, deleted: succ})
+    }).catch(err => {
+        res.send({status: false, deleted: err})
+    })
+}
 // module.exports.findSpecficCompanyJob = (req, res) => {
 //     const id = req.params.id
 //     jobModel.findMultipleWithQuery(id)

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap'
+import { Container, Row, Col, Card, Image } from 'react-bootstrap'
 import clsx from 'clsx';
 import BusinessIcon from '@material-ui/icons/Business';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
@@ -27,17 +27,19 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Slider from './Slider'
 import { Link } from 'react-router-dom';
 import AboutCard from './AboutCard'
-import SideManu from './SideManu'
-import UserSignUpForm from '../forms/UserSignUpForm'
 import axios from 'axios'
 import AppSettings from '../AppSettings'
 import FooterPage from '../footer/FooterPage'
+import "./homepage.css"
+import SliderForFrontPage from './SliderForFrontPage'
+import { Form, Button } from 'react-bootstrap';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         overflowY: 'hidden',
+        backgroundColor: '#2f3233'
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
@@ -64,8 +66,11 @@ const useStyles = makeStyles((theme) => ({
         width: drawerWidth,
         flexShrink: 0,
         whiteSpace: 'nowrap',
+        backgroundColor: '#2f3233'
+
     },
     drawerOpen: {
+        backgroundColor: "#262d30",
         width: drawerWidth,
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
@@ -73,17 +78,19 @@ const useStyles = makeStyles((theme) => ({
         }),
     },
     drawerClose: {
+        backgroundColor: "#262d30",
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
         overflowX: 'hidden',
-        width: theme.spacing(6) + 1,
+        width: theme.spacing(7) + 1,
         [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(8) + 1,
+            width: theme.spacing(9) + 1,
         },
     },
     toolbar: {
+        backgroundColor: '#2f3233',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-end',
@@ -93,6 +100,8 @@ const useStyles = makeStyles((theme) => ({
     content: {
         flexGrow: 1,
         padding: theme.spacing(1),
+        backgroundColor: '#2f3233'
+
     },
 }));
 
@@ -102,21 +111,30 @@ export default function MiniDrawer() {
     const [open, setOpen] = React.useState(false);
     const [featureJobs, setFeatureJobs] = useState([])
     const [topJobs, setTopJobs] = useState([])
+    const [companies, setCompaines] = useState([])
     useEffect(() => {
         getAllJobsFromDb()
+        getCompanies()
     }, [])
     const handleDrawerOpen = () => {
         setOpen(true);
     };
-
+    const getCompanies = () => {
+        axios.get(`${AppSettings.SERVER_URL_PORT}/company/`)
+            .then(getcompanies => {
+                setCompaines(getcompanies.data.compines.reverse().slice(0, 2))
+            }).catch(err => {
+                console.log("Error in fetching Companies ", err)
+            })
+    }
     const handleDrawerClose = () => {
         setOpen(false);
     };
     const getAllJobsFromDb = () => {
         axios.get(`${AppSettings.SERVER_URL_PORT}/job/`)
             .then(job => {
-                setTopJobs(job.data.jobs.reverse().slice(0, 4))
-                setFeatureJobs(job.data.jobs.slice(4, 8))
+                setTopJobs(job.data.jobs.reverse().slice(0, 8))
+                setFeatureJobs(job.data.jobs.slice(8, 12))
             })
             .catch(err => {
                 console.log("Some thing went wrong", err)
@@ -130,6 +148,10 @@ export default function MiniDrawer() {
                 className={clsx(classes.appBar, {
                     [classes.appBarShift]: open,
                 })}
+                style={{
+                    backgroundColor: "#262d30",
+                    height: 70
+                }}
             >
                 <Toolbar>
                     <IconButton
@@ -144,7 +166,7 @@ export default function MiniDrawer() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h4" noWrap>
-                        Campus Management System | IA
+                        <span className='mainHeading'>C</span>ampus <span className='mainHeading' >M</span>anagement <span className='mainHeading'>S</span>ystem
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -160,150 +182,298 @@ export default function MiniDrawer() {
                         [classes.drawerClose]: !open,
                     }),
                 }}
+                style={{
+                    backgroundColor: '#2f3233'
+                }}
             >
                 <div className={classes.toolbar}>
                     <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                        {theme.direction === 'rtl' ? <ChevronRightIcon style={{ color: 'white' }} /> : <ChevronLeftIcon style={{ color: 'white' }} />}
                     </IconButton>
                 </div>
                 <Divider />
                 <List>
                     <Link to="/student">
                         <ListItem button>
-                            <ListItemIcon><GroupAddIcon /></ListItemIcon>
-                            <ListItemText> Students </ListItemText>
+                            <ListItemIcon><GroupAddIcon style={{ color: "rgb(14, 232, 207)", fontSize: 40 }} /></ListItemIcon>
+                            <ListItemText style={{ color: 'white' }} > Students </ListItemText>
                         </ListItem>
                     </Link>
                     <Link to='/allJobs'>
                         <ListItem button>
-                            <ListItemIcon><WorkRoundedIcon /></ListItemIcon>
-                            <ListItemText> See Jobs</ListItemText>
+                            <ListItemIcon><WorkRoundedIcon style={{ color: "rgb(14, 232, 207)", fontSize: 40 }} /></ListItemIcon>
+                            <ListItemText style={{ color: 'white' }}> See Jobs</ListItemText>
                         </ListItem>
                     </Link>
                     <Link to='/companies'>
                         <ListItem button>
-                            <ListItemIcon><BusinessIcon /></ListItemIcon>
-                            <ListItemText> Companies</ListItemText>
+                            <ListItemIcon><BusinessIcon style={{ color: "rgb(14, 232, 207)", fontSize: 40 }} /></ListItemIcon>
+                            <ListItemText style={{ color: 'white' }}> Companies</ListItemText>
                         </ListItem>
                     </Link>
                     <Link to='/postjob'>
                         <ListItem button>
-                            <ListItemIcon><DnsRoundedIcon /></ListItemIcon>
-                            <ListItemText> Post Job </ListItemText>
+                            <ListItemIcon><DnsRoundedIcon style={{ color: "rgb(14, 232, 207)", fontSize: 40 }} /></ListItemIcon>
+                            <ListItemText style={{ color: 'white' }}> Post Job </ListItemText>
                         </ListItem>
                     </Link>
                 </List>
                 <Divider />
-                <List>
+                <List style={{ listStyle: "none" }}>
                     <a href='https://www.facebook.com/'>
                         <ListItem button>
-                            <ListItemIcon><FacebookIcon /></ListItemIcon>
-                            <ListItemText> Facebook </ListItemText>
+                            <ListItemIcon><FacebookIcon style={{ color: "rgb(14, 232, 207)", fontSize: 40 }} /></ListItemIcon>
+                            <ListItemText style={{ color: 'white' }}> Facebook </ListItemText>
                         </ListItem></a>
                     <a href='https://www.instagram.com/'>
                         <ListItem button>
-                            <ListItemIcon><InstagramIcon /></ListItemIcon>
-                            <ListItemText>Instagram</ListItemText>
+                            <ListItemIcon><InstagramIcon style={{ color: "rgb(14, 232, 207)", fontSize: 40 }} /></ListItemIcon>
+                            <ListItemText style={{ color: 'white' }}>Instagram</ListItemText>
                         </ListItem></a>
                     <a href='https://twitter.com/?lang=en'>
                         <ListItem button>
-                            <ListItemIcon> <TwitterIcon /></ListItemIcon>
-                            <ListItemText>Twitter</ListItemText>
+                            <ListItemIcon> <TwitterIcon style={{ color: "rgb(14, 232, 207)", fontSize: 40 }} /></ListItemIcon>
+                            <ListItemText style={{ color: 'white' }}>Twitter</ListItemText>
                         </ListItem></a>
                     <a href='https://www.linkedin.cn/signup/cold-join'>
                         <ListItem button>
-                            <ListItemIcon> <LinkedInIcon /></ListItemIcon>
-                            <ListItemText>LinkedIn</ListItemText>
+                            <ListItemIcon> <LinkedInIcon style={{ color: "rgb(14, 232, 207)", fontSize: 40 }} /></ListItemIcon>
+                            <ListItemText style={{ color: 'white' }}>LinkedIn</ListItemText>
                         </ListItem></a>
                 </List>
             </Drawer>
             <main className={classes.content} >
                 <div className={classes.toolbar} />
-                <Slider />
+                <Container fluid>
+                    <Row>
+                        <Col>
+                            <Slider />
+                        </Col>
+                    </Row>
+                </Container>
                 <Container className='mt-5'>
                     <Row>
-                        <Col lg={6} className='text-center'>
-                            <Card>
-                                <Card.Header className='bg-primary'>
-                                    <Card.Text>
-                                        <h2 className="lead text-left text-light"> Top Jobs in Our Site</h2>
-                                    </Card.Text>
-                                </Card.Header>
-                                <Card.Body className='text-left'>
-                                    {topJobs.length ? topJobs.map(job => <Card.Text>
-                                        <p> <b> {job.jobTitle} - {job.commpanyName} </b> <br />
-                                            <span className='small'> {job.companyLocation}</span> | <span className='small  lead'> {job.addedOn} </span></p>
-                                    </Card.Text>) : <></>}
-                                    <hr />
-                                    <Card.Link>
-                                        <Link to='/allJobs'> See All Jobs </Link>
-                                    </Card.Link>
-                                </Card.Body>
-                                <Card.Footer>
-                                    <Card.Text className='lead small text-left'>
-                                        <b>Want to apply for jobs lets! Sign In</b>
-                                    </Card.Text>
-                                    <Link to='/login' className='btn btn-block btn-primary'> Sign In</Link>
-                                </Card.Footer>
-                            </Card>
+                        <Col lg={12}>
+                            <h1 className='mainHeadingAfterSlider mt-5'>
+                                <span className='spanInsideMainHeading'>S</span>hort <span className='spanInsideMainHeading'>M</span>essage <span className='spanInsideMainHeading'>F</span>rom <span className='spanInsideMainHeading'>A</span>dmin
+                            </h1>
                         </Col>
-                        <Col lg={6}>
-                            <Card>
-                                <Card.Header className='bg-primary'>
-                                    <Card.Text>
-                                        <h2 className="lead text-left text-light"> Featured Jobs In our Company </h2>
-                                    </Card.Text>
-                                </Card.Header>
-                                <Card.Body className='text-left'>
-                                    <Row>
-                                        {featureJobs.length > 0 ? featureJobs.map(job =>
-                                            <Col lg={6}>
-                                                <Card.Text>
-                                                    <p> <b> {job.jobTitle } - {job.commpanyName} </b> <br />
-                                                        <span className='small'> {job.companyLocation} </span> | <span className='small  lead'> {job.addedOn} </span></p>
-                                                </Card.Text>
-                                                <hr />
-                                            </Col>
-                                            ) : <></>}
-                                    </Row>
+                    </Row>
+                    <Row>
+                        <Col lg={12} className='mt-5'>
+                            <Card style={{ backgroundColor: '#2f3233', boxShadow: "10px 10px 10px #eba12a" }}>
+                                <Card.Body>
+                                    <h2 className='quotesOfMainHeading mt-5'>
+                                        We <span className="spanInsideQuotes">listen</span>, we <span className="spanInsideQuotes">understand</span>, we think, we <span className="spanInsideQuotes">care</span> and most importantly, we stay focused on <span className="spanInsideQuotes">creating</span> opportunity for you to get the best job and best <span className="spanInsideQuotes">Candidate</span> for your job
+                                    </h2>
                                 </Card.Body>
                             </Card>
                         </Col>
                     </Row>
-                <Row>
-                    <Col>
-                        <Card className='mt-5'>
-                            <Card.Header className='text-white bg-primary p-3 text-center'>
-                                <Card.Title>
-                                    <h2 className='lead'> Wait Why wasting a time lets! Enroll With us and Find a Suitable job for You</h2>
+                    <Row className="mt-5">
+                        <Col lg={12} className='mt-5 mb-5'>
+                            <h1 style={{ fontSize: 60, fontWeight: 'bold', color: "rgb(14, 232, 207)" }}> Recent Posted Jobs </h1>
+                        </Col>
+                    </Row>
+                    <Row className='mt-3'>
+                        {topJobs && topJobs.length > 0 ? topJobs.map(job =>
+                            <Col lg={3}>
+                                <Card style={{ backgroundColor: "#2f3233", boxShadow: "6px 6px 6px #33302c" }} className='test02'>
+                                    <Card.Header className='text-center'>
+                                        <div className='pt-2  ml-4 test'>
+                                            <Card.Title className='text-white text-center mt-5'> {job.commpanyName.length > 15 ? job.commpanyName.substr(0, 15) + "....." : job.commpanyName}</Card.Title>
+                                        </div>
+                                    </Card.Header>
+                                    <Card.Body>
+                                        <Card.Text>
+                                            <h4 className='text-center text-white'> {job.jobTitle} </h4>
+                                            <p className='pt-4 text-center text-white muted'> Salary {job.salary} </p>
+                                            <p className=' text-center text-white muted'> {job.companyLocation}</p>
+                                            <p className='text-center text-white muted small'>{job.addedOn}</p>
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </Col>) : <Card style={{ backgroundColor: "#2f3233" }}>
+                            <Card.Header>
+                                <Card.Title className='lead text-white text-center'>
+                                    Opps! Jobs will update very soon
                                 </Card.Title>
                             </Card.Header>
-                        </Card>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col lg={9}>
-                        <Card className='mt-5'>
-                            <Card.Title className='text-primary text-center'>
-                                <h2> SignUp! | Student</h2>
-                            </Card.Title>
-                            <Card.Body>
-                                <UserSignUpForm />
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col className='mt-5'>
-                        <SideManu />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col className='mt-5'>
-                        <AboutCard />
-                    </Col>
-                </Row>
+                        </Card>}
+                    </Row>
                 </Container>
-        <FooterPage />
+                <Container fluid>
+                    <Row>
+                        <Col lg={6} className="mt-5">
+                            <Image style={{ width: "100vw", height: "80vh" }} id='imageStyle' src="https://monix.netlify.app/assets/img/about.png" fluid />
+                        </Col>
+                        <Col lg={6} className="mt-5">
+                            <Card style={{ backgroundColor: '#2f3233' }}>
+                                <Card.Body>
+                                    <Card.Text>
+                                        <h4 style={{ color: 'white', lineHeight: 2, letterSpacing: 2 }} className='mt-5 pt-5 text-justify'>
+                                            <span style={{ color: "rgb(14, 232, 207)" }}>Exprienced Company</span> are enrolled with us ! More than <span style={{ color: "rgb(14, 232, 207)" }}>20 jobs</span> posted in a day why you waiting for come join <span style={{ color: "rgb(14, 232, 207)" }}>with us</span>
+                                        </h4>
+                                        <p className='muted text-light text-center pt-4' style={{ fontSize: 15 }}>
+                                            Sed sollicitudin ligula mi, ut accumsan est dapibus a. Cras pharetra dolor gravida, mattis tellus at, dapibus velit. Aenean dictum enim a augue aliquet posuere eget quis nibh efficitur uet varius.
+                                        </p>
+                                    </Card.Text>
+                                    <Link to='/login' className='btn btn-block mt-5 forSigninButton' style={{ backgroundColor: "rgb(14, 232, 207)", borderRadius: 60 }}> Sign In</Link>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
+                <Container>
+                    <Row className='mt-5'>
+                        <Col lg={12}>
+                            <h5 className='text-center' style={{ color: "rgb(14, 232, 207)" }}> <s>Registered Companies</s> </h5>
+                        </Col>
+                    </Row>
+                    <Row className='mt-2'>
+                        <Col lg={12}>
+                            <h3 className='text-center' style={{ color: "rgb(14, 232, 207)", fontSize: 40 }}> Registered Best Companies </h3>
+                        </Col>
+                    </Row>
+                    <Row>
+                        {companies && companies.length > 0 ? companies.map(company =>
+                            <Col lg={6} className='mt-5'>
+                                <Card style={{ backgroundColor: '#2f3233', boxShadow: "20px 10px 20px #33302c" }}>
+                                    <Card.Header>
+                                        <Card.Title>
+                                            <h3 className='text-center' style={{ color: "rgb(14, 232, 207)", fontWeight: 'bold' }}>{company.companyName}</h3>
+                                        </Card.Title>
+                                    </Card.Header>
+                                    <Card.Body>
+                                        <Card.Text className='text-light'>
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                                        </Card.Text>
+                                    </Card.Body>
+                                    <Divider />
+                                    <Card.Footer>
+                                        <p className='pt-4 text-center text-white muted'> Owner Name : {company.companyOwnerName} </p>
+                                        <p className='pt-4 text-center text-white muted'> Location : {company.companyCity} | {company.companyCountry}</p>
+                                        <p className=' text-center text-white muted'> Cetaory : {company.companyCetagory} </p>
+                                    </Card.Footer>
+                                </Card>
+                            </Col>) : <Card style={{ backgroundColor: "#2f3233" }}>
+                            <Card.Header>
+                                <Card.Title className='lead text-white text-center'>
+                                    Opps! Companies will update very soon
+                                </Card.Title>
+                            </Card.Header>
+                        </Card>}
+                    </Row>
+                </Container>
+                <Container className='mt-5'>
+                    <Row>
+                        <Col lg={12}>
+                            <h3 className='text-center text-white' style={{ fontSize: 40 }}> <span style={{ color: "rgb(14, 232, 207)", fontSize: 40 }}>CMS</span> Records </h3>
+                        </Col>
+                    </Row>
+                </Container>
+                <Container className='mt-5'>
+                    <Row>
+                        <Col lg={2}>
+                        </Col>
+                        <Col lg={8}>
+                            <SliderForFrontPage />
+                        </Col>
+                    </Row>
+                </Container>
+                <Container className='mt-5'>
+                    <Row>
+                        <Col lg={12}>
+                            <h2 style={{ fontSize: 60, fontWeight: 'bold', color: 'white' }}> Featured  <span style={{ color: "rgb(14, 232, 207)" }}> Jobs </span> </h2>
+                        </Col>
+                    </Row>
+                </Container>
+                <Container className='mt-5 mb-5'>
+                    <Row>
+                        {featureJobs && featureJobs.length > 0 ? featureJobs.map(job =>
+                            <Col lg={6} className='mt-4 mb-4'>
+                                <Card style={{ backgroundColor: "#2f3233", boxShadow: "30px 30px 30px #33302c" }}>
+                                    <Card.Header className='text-center'>
+                                        <Card.Title className='text-center mt-5' style={{ color: "rgb(14, 232, 207)", fontSize: 40 }}> {job.commpanyName}</Card.Title>
+                                    </Card.Header>
+                                    <Card.Body>
+                                        <Card.Text>
+                                            <h4 className='text-center text-white'> {job.jobTitle} </h4>
+                                            <p className='pt-4 text-center text-white '> Salary {job.salary} </p>
+                                            <p className=' text-center text-white '> {job.companyLocation}</p>
+                                            <p className='text-center text-white '>{job.addedOn}</p>
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </Col>) : <Card style={{ backgroundColor: "#2f3233" }}>
+                            <Card.Header>
+                                <Card.Title className='lead text-white text-center'>
+                                    Opps! Featured Jobs will update very soon
+                                </Card.Title>
+                            </Card.Header>
+                        </Card>}
+                    </Row>
+                </Container>
+                <Container className='mt-5'>
+                    <Row>
+                        <Col lg={12}>
+                            <AboutCard />
+                        </Col>
+                    </Row>
+                </Container>
+                <Container className='mt-5 mb-4'>
+                    <Row>
+                        <Col>
+                            <h2 className='text-center' style={{ fontSize: 60, fontWeight: 'bold', color: 'white' }}> Want to <span style={{ color: "rgb(14, 232, 207)" }}> Join </span> with  <span style={{ color: "rgb(14, 232, 207)" }}> US </span> </h2>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col lg={6} className='mt-5'>
+                            <h3 style={{ color: "rgb(14, 232, 207)", fontSize: 55, textAlign: 'center' }}>  Sign in </h3>
+                        </Col>
+                        <Col lg={4}>
+                            <Link to='/login' className='btn btn-block mt-5 p-1 forSignButtonAtTop' style={{ backgroundColor: "rgb(14, 232, 207)", borderRadius: 20, fontSize: 30 }}> Click Now </Link>
+                        </Col>
+                    </Row>
+                </Container>
+                <Container fluid className='mt-5 mb-2'>
+                    <Row className='mt-2'>
+                        <Col>
+                            <h2 style={{ fontSize: 60, fontWeight: 'bold', color: 'white' }}> Send Us <span style={{ color: "rgb(14, 232, 207)", textDecoration: 'underline' }}> Your Feedback </span></h2>
+                        </Col>
+                    </Row>
+                </Container>
+                <Container>
+                    <Row>
+                        <Col lg={8}>
+                            <Card style={{ backgroundColor: '#2f3233' }}>
+                                <Card.Body>
+                                    <Form>
+                                        <Form.Group controlId="formBasicEmail">
+                                            <Form.Label style={{ fontSize: 40, color: "rgb(14, 232, 207)" }}>Email address</Form.Label>
+                                            <Form.Control type="email" placeholder="Enter email" className='pt-4 pb-4 text-white' style={{ backgroundColor: "#2f3233", borderColor: "rgb(14, 232, 207)" }} />
+                                            <Form.Text className="text-muted text-white">
+                                                We'll never share your email with anyone else.
+                                            </Form.Text>
+                                        </Form.Group>
+
+                                        <Form.Group controlId="exampleForm.ControlTextarea1">
+                                            <Form.Label style={{ fontSize: 40, color: "rgb(14, 232, 207)" }}>Write Comments Here </Form.Label>
+                                            <Form.Control as="textarea" rows={5} placeholder="I Like this page ......" className='text-white' style={{ backgroundColor: "#2f3233", borderColor: "rgb(14, 232, 207)" }} />
+                                        </Form.Group>
+                                        <Button style={{ backgroundColor: "rgb(14, 232, 207)" }} type="submit" className="btn-block text-dark">
+                                            Submit
+                                        </Button>
+                                    </Form>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                        <Col lg={4}>
+                        </Col>
+                    </Row>
+                </Container>
+                <FooterPage />
             </main>
-        </div >
+        </div>
     );
 }

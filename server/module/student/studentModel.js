@@ -145,4 +145,18 @@ module.exports.updateStudentInformation = (query, dataToBeUpdate) => {
 
     })
 }
-
+module.exports.removeDeletedJobsFromStudentCollection = (jobId) => {
+    return new Promise((res, rej) => {
+        studentModel.updateMany(
+            {},
+            { $pull: { appliedJobs: { jobId: jobId } } },
+            { multi: true },
+        )
+            .then(removedJobDeleted => {
+                res(removedJobDeleted)
+            }).catch(err => {
+                console.log("Something went Wrong Error in removedJobDeleted", err)
+                rej(err)
+            })
+    })
+}

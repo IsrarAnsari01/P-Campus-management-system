@@ -75,5 +75,16 @@ module.exports.deleteSingleWithQuery = (query) => {
             })
     })
 }
-
+module.exports.deleteMultipleWithQuery = (query) => {
+    return new Promise((resolve, reject) => {
+        JobModel.deleteMany({ companyInfo: query })
+            .then(deletedJobs => {
+                resolve(deletedJobs)
+            })
+            .catch(err => {
+                console.log("Unable to Delete Jobs, query ", query);
+                reject(err)
+            })
+    })
+}
 

@@ -91,17 +91,26 @@ module.exports.deleteSpecficStudent = (req, res) => {
 module.exports.updateUserInfo = (req, res) => {
     const studnetId = req.params.id
     const update = {
-            fName: req.body.fName,
-            lName: req.body.lName,
-            email: req.body.email,
-            skills: req.body.skills,
-            education: req.body.education,
-            exprience: req.body.exprience,
+        fName: req.body.fName,
+        lName: req.body.lName,
+        email: req.body.email,
+        skills: req.body.skills,
+        education: req.body.education,
+        exprience: req.body.exprience,
     }
     studentModel.updateStudentInformation(studnetId, update)
         .then(student => {
             res.send({ status: true, updatedStudent: student })
         }).catch(err => {
             res.send({ status: false, err: err })
+        })
+}
+module.exports.removeDeletedJobInformation = (req, res) => {
+    const jobId = req.params.id
+    studentModel.removeDeletedJobsFromStudentCollection(jobId)
+        .then(succ => {
+            res.send({ status: true, deleted: succ })
+        }).catch(err => {
+            res.send({ status: false, deleted: err })
         })
 }

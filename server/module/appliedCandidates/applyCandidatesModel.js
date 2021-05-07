@@ -63,6 +63,18 @@ module.exports.deleteWithQuery = (candidateId) => {
             })
     })
 }
+module.exports.deleteMultipleJobCandidateWithQuery = (jobId) => {
+    return new Promise((resolve, reject) => {
+        ApplyCandidateModel.deleteMany({ jobInfo: jobId })
+            .then(deletedCandidateOfSpecificJob => {
+                resolve(deletedCandidateOfSpecificJob)
+            })
+            .catch(err => {
+                console.log("Unable to delete candidate of specific job, query ", err);
+                reject(err)
+            })
+    })
+}
 
 
 

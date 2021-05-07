@@ -4,7 +4,7 @@ export default function Slider() {
         <Carousel>
             <Carousel.Item interval={1000}>
                 <img
-                    className="d-block w-100"
+                    className="d-block w-100 h-90"
                     src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
                     alt="First slide"
                 />
@@ -15,7 +15,7 @@ export default function Slider() {
             </Carousel.Item>
             <Carousel.Item interval={1000}>
                 <img
-                    className="d-block w-100"
+                    className="d-block w-100 h-90"
                     src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
                     alt="Second slide"
                 />
@@ -26,7 +26,7 @@ export default function Slider() {
             </Carousel.Item>
             <Carousel.Item interval={1000}>
                 <img
-                    className="d-block w-100"
+                    className="d-block w-100 h-90"
                     src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
                     alt="Third slide"
                 />

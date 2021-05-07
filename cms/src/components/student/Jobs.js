@@ -46,7 +46,7 @@ export default function Jobs() {
             return
         }
         setGetResponseFromServer(true)
-        if (appliedJobsIndex.length >= 1) {
+        if (appliedJobsIndex.length > 0) {
             let matchingIndex = appliedJobsIndex.includes(obj.indexNum)
             if (matchingIndex) {
                 alert("Dear User you already Apply for this job")
@@ -73,6 +73,7 @@ export default function Jobs() {
             }).catch(err => {
                 console.log("Something went Wrong", err)
             }).finally(() => setGetResponseFromServer(false))
+
     }
     function filterList(jobTitle) {
         let filterArray = copyAllJobs.filter((job) => job.jobTitle.includes(jobTitle))
@@ -81,7 +82,7 @@ export default function Jobs() {
         }
         setAllJobs(filterArray)
     }
-    const jobsPerPage = 10;
+    const jobsPerPage = 20;
     const pagesVisited = pageNumber * jobsPerPage
 
     const displayJobs = allJobs

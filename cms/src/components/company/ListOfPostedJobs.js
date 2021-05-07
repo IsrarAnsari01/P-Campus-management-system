@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap'
+import { Container, Row, Col, Card, Button } from 'react-bootstrap'
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom'
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -29,12 +28,12 @@ export default function ListOfAppliedJobs() {
     const [pageNumber, setPageNumber] = useState(0)
 
     useEffect(() => {
-        getThisCompanyJob()
+        const companyInfo = localStorage.getItem("CI")
+        getThisCompanyJob(companyInfo)
     }, [])
-    const companyInfo = localStorage.getItem("CI")
 
-    const getThisCompanyJob = () => {
-        axios.get(`${AppSettings.SERVER_URL_PORT}/job/findCompanyJob/${companyInfo}`)
+    const getThisCompanyJob = (id) => {
+        axios.get(`${AppSettings.SERVER_URL_PORT}/job/findCompanyJob/${id}`)
             .then(jobs => {
                 setJobPostedByThisCompany(jobs.data.jobs.reverse())
             }).catch(err => {
@@ -44,7 +43,17 @@ export default function ListOfAppliedJobs() {
     const deleteThisPost = (id) => {
         axios.get(`${AppSettings.SERVER_URL_PORT}/job/${id}`)
             .then(succ => {
-                getThisCompanyJob()
+                axios.get(`${AppSettings.SERVER_URL_PORT}/candidate/delete-specfic-job-candidates/${id}`)
+                    .then(succ => {
+                        axios.get(`${AppSettings.SERVER_URL_PORT}/student/remove-deleted-job-Information/${id}`)
+                            .then(succ => {
+                                if (succ.status) {
+                                    getThisCompanyJob()
+                                    return
+                                }
+
+                            })
+                    })
             })
             .catch(Err => {
                 alert("Error in deleting this job ==> ", Err)
@@ -88,7 +97,7 @@ export default function ListOfAppliedJobs() {
                         </Col>
                         <Col lg={2} className='mt-5'>
                             <Typography>
-                                <Link to='#' className='btn btn-danger text-white' onClick={() => deleteThisPost(job._id)}> Delete Job </Link>
+                                <Button  className='btn btn-danger text-white' onClick={() => deleteThisPost(job._id)}> Delete Job </Button>
                             </Typography>
                         </Col>
                     </Row>
@@ -102,8 +111,16 @@ export default function ListOfAppliedJobs() {
     return <>
         <div className={classes.root}>
 
-            {!jobPostedByThisCompany.lenght > 0 ?
+            {jobPostedByThisCompany.lenght == 0 ?
                 <>
+                    <Card>
+                        <Card.Header className='bg-danger text-center text-white'>
+                            <Card.Title >
+                                <h2 className='lead'> Currently you are not post any job </h2>
+                            </Card.Title>
+                        </Card.Header>
+                    </Card>
+                </> : <>
                     {displayPostedJobs}
                     <ReactPaginate
                         previousLabel={"Previous"}
@@ -114,14 +131,7 @@ export default function ListOfAppliedJobs() {
                         activeClassName={"paginationActive"}
                     />
                 </>
-                :
-                <Card>
-                    <Card.Header className='bg-danger text-center text-white'>
-                        <Card.Title >
-                            <h2 className='lead'> Currently you are not post any job </h2>
-                        </Card.Title>
-                    </Card.Header>
-                </Card>
+
             }
         </div>
     </>

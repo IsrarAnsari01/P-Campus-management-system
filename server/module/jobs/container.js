@@ -42,6 +42,18 @@ module.exports.deleteSpecficJob = (req, res) => {
         })
 
 }
+module.exports.deleteAllJobsofSpecificCompany = (req,res) => {
+    const companyId =  req.params.id
+    jobModel.deleteMultipleWithQuery(companyId)
+    .then(succ => {
+        res.send({status: true, deleted: succ})
+    }).catch(err => {
+        res.send({status: false, deletedErr: err})
+    })
+}
+
+
+
 module.exports.updateCompanyJobProfile = (req, res) => {
     const candidateId = req.params.id
     const companyName = req.body.commpanyName

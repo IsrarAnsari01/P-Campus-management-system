@@ -1,0 +1,8 @@
+.forLinks {
+    font-size: 20px;
+    color: white;
+    transition: all .5s;
+}
+.forLinks:hover{
+    padding-left: 10px;
+} 

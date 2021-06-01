@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Container, Card, Row, Col, Image } from 'react-bootstrap'
+import { Container, Card, Row, Col } from 'react-bootstrap'
 import NavBar from '../NavBar'
 import FooterPage from '../footer/FooterPage'
 import SideManu from '../homePage/SideManu'
@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import Ads from './Ads'
 import axios from 'axios'
 import AppSettings from '../AppSettings'
+import "./companyStyle.css"
 export default function CompanyScreen() {
     const [compines, setcompines] = useState([])
     const getCompinesFromServer = () => {
@@ -25,7 +26,19 @@ export default function CompanyScreen() {
 
     return <>
         <NavBar />
-        <Image style={{ width: "100vw", height: "100vh", }} src="https://images.unsplash.com/photo-1603357465999-241beecc2629?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1104&q=80" fluid />
+        {/* Company Banner */}
+        <section className='companyBanner'>
+            <Container className='pt-5 pb-5'>
+                <Row className='pt-5 pb-5'>
+                    <Col className='pt-5 pb-5'>
+                        <h2> Welcome to Campus Management System</h2>
+                        <h5> If you worried about batter candidates for your jobs <br /> Then you are in right place</h5>
+                        <p className='text-danger pt-2 pb-2'>We have many companies in our portal its Safe platform Lets! login</p>
+                    </Col>
+                </Row>
+            </Container>
+        </section>
+        {/* Company Banner */}
         <Container fluid>
             <Row>
                 <Col>
@@ -86,7 +99,7 @@ export default function CompanyScreen() {
                             <ComapnySignUpForm />
                         </Card.Body>
                         <Card.Footer className='text-center'>
-                            <Link to='/companyLogIn'> If you alerady have an account lets LogIn!</Link> | <Link to='/companySignIn'> Sign Up</Link>
+                            <Link to='/login'> If you alerady have an account lets Login!</Link> | <Link to='/companySignIn'> Sign Up</Link>
                         </Card.Footer>
                     </Card>
                 </Col>

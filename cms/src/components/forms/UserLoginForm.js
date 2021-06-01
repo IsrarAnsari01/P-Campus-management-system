@@ -6,6 +6,8 @@ import LockIcon from '@material-ui/icons/Lock';
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import Spinner from 'react-bootstrap/Spinner'
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import AppSetting from '../AppSettings'
 import { Button, Container, Row, Col, Card, Alert } from 'react-bootstrap'
 import "./alerts.css"
@@ -20,6 +22,7 @@ export default function UserLoginForm() {
     let [getResponseFromServer, setGetResponseFromServer] = useState(false)
     let [email, setEmail] = useState('')
     let [password, setPassword] = useState('')
+    let [companySwitch, setCompanySwitch] = useState(false)
     const loginUser = (e) => {
         e.preventDefault();
         setGetResponseFromServer(true)
@@ -48,17 +51,31 @@ export default function UserLoginForm() {
         document.getElementById("emailErr").style.display = 'none'
         document.getElementById("pwdErr").style.display = 'none'
         let data = { userData: { email, password } }
+        if (companySwitch) {
+            axios.post(`${AppSetting.SERVER_URL_PORT}/company/login-company`, data)
+                .then(success => {
+                    history.push("/postjob", { staus: true })
+                    localStorage.setItem("CI", success.data.company._id)
+                    cleanFields()
+                })
+                .catch(err => {
+                    console.log("Something went Wrong ==> ", err)
+                    alert("Something went wrong check the userName and password")
+                }).finally(() => setGetResponseFromServer(false))
+            return
+        }
         axios.post(`${AppSetting.SERVER_URL_PORT}/student/login-user`, data)
             .then(user => {
                 localStorage.setItem("SI", user.data.student._id)
-                console.log(user.data.student._id)
                 history.push("/allJobs", { status: true })
                 cleanFields()
             })
             .catch(err => {
+                // console.log("unable to find user ", err)
                 console.log("Unable to find User Error ==>", err)
                 alert("Password !== password")
             }).finally(() => setGetResponseFromServer(false))
+
     }
     const cleanFields = () => {
         setEmail('')
@@ -66,7 +83,7 @@ export default function UserLoginForm() {
     }
     return <>
         <div className={classes.root}>
-            <Card className='forStudentLoginForm'>
+            <Card className='forStudentLoginForm bg-light'>
                 <Card.Body>
                     <div id='gernalErr' className='display-gernal-err-for-student-login-form'>
                         <Alert variant='danger'>
@@ -75,9 +92,9 @@ export default function UserLoginForm() {
                     </div>
                     <form autoComplete="off">
                         <Container>
-                            <Row>
+                            <Row className='bg-light'>
                                 <Col lg={1} className='mt-4'>
-                                    <EmailIcon />
+                                    <EmailIcon style = {{color: "rgb(14, 232, 207)"}} />
                                 </Col>
                                 <Col lg={11}>
                                     <TextField
@@ -101,7 +118,7 @@ export default function UserLoginForm() {
                             </div>
                             <Row>
                                 <Col lg={1} className='mt-4'>
-                                    <LockIcon />
+                                    <LockIcon style = {{color: "rgb(14, 232, 207)"}} />
                                 </Col>
                                 <Col lg={11}>
                                     <TextField
@@ -115,6 +132,14 @@ export default function UserLoginForm() {
                                         fullWidth
                                         margin="normal"
                                         required
+                                    />
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <FormControlLabel
+                                        control={<Switch checked={companySwitch} onChange={() => setCompanySwitch(!companySwitch)} name="Company" />}
+                                        label="Company" style = {{color: "#9c8797"}}
                                     />
                                 </Col>
                             </Row>

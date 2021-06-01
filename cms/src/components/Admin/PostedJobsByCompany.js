@@ -29,9 +29,13 @@ export default function PostedJobsByCompany() {
         setGetResponseFromServer(true)
         axios.get(`${AppSettings.SERVER_URL_PORT}/job/${id}`)
             .then(success => {
-                if (success.status) {
-                    getAddJobs()
-                }
+                axios.get(`${AppSettings.SERVER_URL_PORT}/student/remove-deleted-job-Information/${id}`)
+                    .then(succ => {
+                        if (succ.status) {
+                            getAddJobs()
+                        }
+
+                    })
             }).catch(err => {
                 console.log("Error In Deleting User ", err)
             }).finally(() => setGetResponseFromServer(false))

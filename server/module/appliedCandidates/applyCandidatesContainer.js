@@ -21,24 +21,34 @@ module.exports.findSpecficCompanyPostedJobApplyCandidate = function (req, res) {
         })
 
 }
-module.exports.deleteSpecficCandidate = (req,res) => {
+module.exports.deleteSpecficCandidate = (req, res) => {
     const candidateId = req.params.id
     candidateModel.deleteWithQuery(candidateId)
-    .then(success => {
-        res.send({status: true, message: "Candidate Deleted Successfully"})
-    })
-    .catch(err => {
-        res.send({status: true, message: "Error in Deleting Candidate"})
-    })
+        .then(success => {
+            res.send({ status: true, message: "Candidate Deleted Successfully" })
+        })
+        .catch(err => {
+            res.send({ status: true, message: "Error in Deleting Candidate" })
+        })
 }
-module.exports.deleteSpecficJobCandidates = (req,res) => {
+module.exports.deleteSpecficJobCandidates = (req, res) => {
     const jobId = req.params.id
     candidateModel.deleteMultipleJobCandidateWithQuery(jobId)
-    .then(succ => {
-        res.send({status: true, deleted: succ})
-    }).catch(err => {
-        res.send({status: false, deleted: err})
-    })
+        .then(succ => {
+            res.send({ status: true, deleted: succ })
+        }).catch(err => {
+            res.send({ status: false, deleted: err })
+        })
+}
+module.exports.checkUserAlreadyApplyForThisJob = (req, res) => {
+    const candidateId = req.params.id
+    const jobId = req.body.jobId
+    candidateModel.findWetherUserAlreadyApplyForThisJob(candidateId, jobId)
+        .then(succ => {
+            res.send({ apply: true, candidate: succ })
+        }).catch(err => {
+            res.send({ apply: false, err: err })
+        })
 }
 // module.exports.findSpecficCompanyJob = (req, res) => {
 //     const id = req.params.id

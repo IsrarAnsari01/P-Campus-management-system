@@ -75,6 +75,21 @@ module.exports.deleteMultipleJobCandidateWithQuery = (jobId) => {
             })
     })
 }
-
+module.exports.findWetherUserAlreadyApplyForThisJob = (candidateId, jobId) => {
+    return new Promise((resolve, reject) => {
+        let query = {
+            candidateInfo: candidateId, 
+            jobInfo: jobId
+        }
+        ApplyCandidateModel.findOne(query)
+            .then(specficUser => {
+                resolve(specficUser)
+            })
+            .catch(err => {
+                console.log("Unable to check wether user apply for this job or not ", err);
+                reject(err)
+            })
+    })
+}
 
 

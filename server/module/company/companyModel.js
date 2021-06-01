@@ -58,6 +58,7 @@ module.exports.loginWithQuery = (companyDetails) => {
                 return bcrypt.compare(companyDetails.password, company.password, (err, isMatch) => {
                     if (!isMatch) {
                         console.log("Password dosno match")
+                        reject(false)
                         return
                     }
                     resolve(company)

@@ -11,7 +11,7 @@ export default function PostJobForm() {
     const history = useHistory();
     useEffect(() => {
         if (!localStorage.getItem("CI")) {
-            history.push("/companyLogIn", { err: "Company not Login" })
+            history.push("/login", { err: "Company not Login" })
             return
         }
     }, [])

@@ -28,7 +28,7 @@ export default function CompanyList() {
     const deleteThisCompany = (id) => {
         axios.get(`${AppSettings.SERVER_URL_PORT}/company/${id}`)
             .then(succ => {
-                axios.get(`${AppSettings.SERVER_URL_PORT}/job/delete-all-job-of-specific-company/id`)
+                axios.get(`${AppSettings.SERVER_URL_PORT}/job/delete-all-job-of-specific-company/${id}`)
                     .then(succ => {
                         if (succ.status) {
                             getCompinesFromServer()

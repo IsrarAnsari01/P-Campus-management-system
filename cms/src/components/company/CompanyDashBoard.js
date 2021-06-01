@@ -13,7 +13,7 @@ export default function CompanyDashBoard() {
     const [companyDetails, setCompanyDetails] = useState({})
     useEffect(() => {
         if (!localStorage.getItem("CI")) {
-            history.push("/companyLogIn", { companyError: "User are not Log in" })
+            history.push("/login", { companyError: "User are not Log in" })
             return
         }
         getSpecficCompanyFromDB()

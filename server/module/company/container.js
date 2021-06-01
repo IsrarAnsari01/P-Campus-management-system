@@ -27,7 +27,7 @@ module.exports.getAllCompanies = function (req, res) {
 }
 
 module.exports.loginSingleCompany = function (req, res) {
-    companyModel.loginWithQuery(req.body.companyInfo)
+    companyModel.loginWithQuery(req.body.userData)
         .then(company => {
             res.send({ status: true, company: company })
         })

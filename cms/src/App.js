@@ -59,9 +59,9 @@ function App() {
         <Route path='/enrolledStudent'>
           <EnrolledCandidate />
         </Route>
-        <Route path='/companyLogIn'>
+        {/* <Route path='/companyLogIn'>
           <CompanyLoginPage />
-        </Route>
+        </Route> */}
         <Route path='/companySignIn'>
           <CompanySignIn />
         </Route>

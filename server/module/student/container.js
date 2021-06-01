@@ -114,3 +114,14 @@ module.exports.removeDeletedJobInformation = (req, res) => {
             res.send({ status: false, deleted: err })
         })
 }
+module.exports.checkUserAlreadyApplyForThisJob = (req, res) => {
+    const studentId = req.params.id
+    let jobId = req.body.jobId
+    studentModel.checkSpecficUserApplyForThisJobOrNot(studentId, jobId)
+        .then(succ => {
+            res.send({ apply: true, userData: succ })
+        })
+        .catch(err => {
+            res.send({ status: false, err: err })
+        })
+}

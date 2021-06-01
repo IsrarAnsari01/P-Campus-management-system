@@ -24,10 +24,7 @@ const StudentSchema = new mongoose.Schema({
         }
     ]
 })
-
-
 const studentModel = new mongoose.model('students', StudentSchema)
-
 module.exports.createNewStudent = (studentDetails) => {
 
     return new Promise((resolve, reject) => {
@@ -59,7 +56,6 @@ module.exports.findMultipleWithQuery = (query = {}) => {
             })
     })
 }
-
 module.exports.loginWithQuery = (studentDetails) => {
     return new Promise((resolve, reject) => {
         studentModel.findOne({ email: studentDetails.email })
@@ -67,6 +63,7 @@ module.exports.loginWithQuery = (studentDetails) => {
                 return bcrypt.compare(studentDetails.password, student.password, (err, isMatch) => {
                     if (!isMatch) {
                         console.log("Password does not match")
+                        reject(false)
                         return
                     }
                     resolve(student)
@@ -80,7 +77,6 @@ module.exports.loginWithQuery = (studentDetails) => {
             })
     })
 }
-
 module.exports.findSingleWithQuery = (query) => {
     return new Promise((resolve, reject) => {
         studentModel.findOne({ _id: query })
@@ -158,5 +154,19 @@ module.exports.removeDeletedJobsFromStudentCollection = (jobId) => {
                 console.log("Something went Wrong Error in removedJobDeleted", err)
                 rej(err)
             })
+    })
+}
+module.exports.checkSpecficUserApplyForThisJobOrNot = (sId, jId) => {
+    return new Promise((res, rej) => {
+        let query = {
+            _id: sId,
+            "appliedJobs.jobId": jId
+        }
+        studentModel.findOne(query).then(specficUser => {
+            res(specficUser)
+        }).catch(err => {
+            console.log("Something went Wrong Error in Finding Specfic user", specficUser)
+            rej(err)
+        })
     })
 }

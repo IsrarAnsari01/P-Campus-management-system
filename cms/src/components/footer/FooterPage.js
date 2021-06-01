@@ -11,12 +11,12 @@ const FooterPage = () => {
       <Container>
         <Row>
           <Col sm={12} md={6}>
-            <h6>About</h6>
-            <p className="text-justify">CompusManagementSystem.com <i> WANTS TO YOU A BETTER CANDIDATE AS WELL AS BETTER COMPANY FOR JOBS </i> 
-            ALHUMDULIULLAH  We have More than 10 compaines , More than 12 Studens and also more then 15 jobs in our WEBSITE.</p>
+            <h6> <span style={{ fontSize: 30, fontWeight: '900', color: "rgb(14, 232, 207)", letterSpacing: 3 }}>About</span></h6>
+            <p className="text-justify">CompusManagementSystem.com <i> WANTS TO YOU A BETTER CANDIDATE AS WELL AS BETTER COMPANY FOR JOBS </i>
+              ALHUMDULIULLAH  We have More than 10 compaines , More than 12 Studens and also more then 15 jobs in our WEBSITE.</p>
           </Col>
           <Col xs={6} md={3}>
-            <h6>Things we have </h6>
+            <h6><span style={{ fontSize: 30, fontWeight: '900', color: "rgb(14, 232, 207)" }}>Specification</span></h6>
             <ul className="footer-links">
               <li><a href="/companies">Companies</a></li>
               <li><a href="/student">Students</a></li>
@@ -24,7 +24,7 @@ const FooterPage = () => {
             </ul>
           </Col>
           <Col xs={6} md={3}>
-            <h6>Enroll With us</h6>
+            <h6><span style={{ fontSize: 25, fontWeight: '900', color: "rgb(14, 232, 207)" }}>Enroll with us</span></h6>
             <ul className="footer-links">
               <li><a href="/Signin">Student Sign In</a></li>
               <li><a href="/login">Student Login</a></li>
@@ -37,8 +37,8 @@ const FooterPage = () => {
       <Container>
         <Row>
           <Col md={8} sm={6} xs={12}>
-            <p className="copyright-text">Copyright &copy; 2021 All Rights Reserved by
-              <a href="#"> IA.com</a>.
+            <p className="copyright-text"  style = {{ color: "rgb(14, 232, 207)"}}>Copyright &copy; 2021 All Rights Reserved by
+              <a href="#"  style = {{ color: "rgb(14, 232, 207)"}}> IA.com</a>.
             </p>
           </Col>
           <Col md={4} sm={6} xs={12}>

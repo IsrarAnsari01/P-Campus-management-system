@@ -15,7 +15,7 @@ export default function AddJob() {
     const [totalStudent ,setTotalStudents] = useState(0)
     useEffect(() => {
         if (!localStorage.getItem("CI")) {
-            history.push("/companyLogIn", { companyError: "Company Not Login" })
+            history.push("/login", { companyError: "Company Not Login" })
             return
         }
         getSpecficCompanyFromDB()    

@@ -16,7 +16,7 @@ export default function CompanyLoginFrom() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const AdminEmail = "israr46ansari@gmail.com"
-    const Adminpassword = "034924";
+    const Adminpassword = "#####";
     const AdminId = "12014514514adsadfaf49851618100515"
     const loginAdmin = () => {
         if(email != AdminEmail && password != Adminpassword) {
